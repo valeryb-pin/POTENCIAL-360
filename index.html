@@ -327,6 +327,45 @@ function toggleRole(){
   render();
 }
 
+function pageLogin(){
+  return `
+    <div class="card" style="max-width:400px;margin:50px auto">
+      <h2>Iniciar Sesión</h2>
+
+      <div class="form-group">
+        <label>Correo</label>
+        <input id="correo" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input id="password" type="password" class="form-input">
+      </div>
+
+      <button
+        class="btn btn-primary"
+        onclick="login()">
+        Ingresar
+      </button>
+    </div>
+  `;
+}
+
+function login(){
+
+  const correo =
+    document.getElementById("correo").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  alert(
+    "Correo: " + correo +
+    "\nPassword: " + password
+  );
+
+}
+
 function renderPage(){
   const c=document.getElementById('content');
   c.className='content page';
@@ -951,5 +990,6 @@ function renderAnalyticsCharts(){
   }
 }
 
-render();
+document.getElementById("content")
+  .innerHTML = pageLogin();
 </script>
