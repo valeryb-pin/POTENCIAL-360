@@ -351,7 +351,7 @@ function pageLogin(){
   `;
 }
 
-function login(){
+async function login(){
 
   const correo =
     document.getElementById("correo").value;
@@ -359,13 +359,35 @@ function login(){
   const password =
     document.getElementById("password").value;
 
-  alert(
-    "Correo: " + correo +
-    "\nPassword: " + password
-  );
+  try{
+
+    const resp = await fetch(
+      "https://script.google.com/macros/s/AKfycbyD5AmpWXEyIj2Q03YgsRFaVlaMvXAB6i48XfYzLcAPluD4VS36qCFnSCVZA/exec",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          correo: correo,
+          password: password
+        })
+      }
+    );
+
+    const data = await resp.json();
+
+    alert(data.mensaje);
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Error conectando con Apps Script");
+
+  }
 
 }
-
 function renderPage(){
   const c=document.getElementById('content');
   c.className='content page';
