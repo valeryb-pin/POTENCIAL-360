@@ -399,17 +399,16 @@ async function login(){
   const perfil = await cargarPerfil();
   console.log("PERFIL EN LOGIN:", perfil);
   
-  if(!perfil){
-  alert("No se encontró el perfil");
-  return;
-}
+  alert("LLEGO A PERFIL");
+  console.log("PERFIL EN LOGIN:", perfil);
+    
   window.CURRENT_USER = {
     nombre: perfil.nombre_completo,
     email: perfil.correo,
     rol: perfil.rol,
     colegio: perfil.colegio
   };
-
+  alert("ASIGNO CURRENT_USER");
   console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
 
   render();
