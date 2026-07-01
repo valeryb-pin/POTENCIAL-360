@@ -244,7 +244,7 @@ const STATE = {
     {id:2,date:'2025-07-03',mood:'😊 Tranquilo',energy:6,motivation:7,learning:'Comprendí la diferencia entre mis valores personales y los valores sociales.',challenges:'Identificar cuáles son mis verdaderos valores vs los que me impusieron.',insights:'Debo hacer el ejercicio de los valores en silencio, sin apresuramiento.',actions:'Escribir mi lista de valores y llevarla al próximo taller.'},
   ],
   students:[
-    {id:1,name:'Valentina Torres',cohort:'Grupo A',week:4,progress:62,status:'active',avatar:'bg:#6C3FC8'},
+    {id:1,name: ${window.CURRENT_USER?.nombre || 'Estudiante'},cohort:'Grupo A',week:4,progress:62,status:'active',avatar:'bg:#6C3FC8'},
     {id:2,name:'Diego Ramírez',cohort:'Grupo A',week:3,progress:45,status:'active',avatar:'bg:#FF6B6B'},
     {id:3,name:'Camila Herrera',cohort:'Grupo B',week:5,progress:78,status:'active',avatar:'bg:#4ECDC4'},
     {id:4,name:'Sebastián Mora',cohort:'Grupo B',week:2,progress:28,status:'at-risk',avatar:'bg:#F59E0B'},
@@ -453,7 +453,7 @@ function pageHome(){
   return `
   <div class="hero-card">
     <div class="hero-greeting">¡Bienvenida de vuelta!</div>
-    <div class="hero-name">Valentina Torres ✨</div>
+    <div class="hero-name">${window.CURRENT_USER?.nombre || 'Estudiante'} ✨ </div>
     <div class="hero-sub">Estás haciendo un trabajo increíble en tu proyecto de vida.</div>
     <div class="hero-week"><i class="ti ti-calendar" aria-hidden="true"></i> Semana 3 de 8</div>
     <div class="progress-row">
@@ -535,7 +535,7 @@ function pageProfile(){
   <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px">
     <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--coral));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;flex-shrink:0">VT</div>
     <div style="flex:1">
-      <div style="font-size:20px;font-weight:800;margin-bottom:4px">Valentina Torres</div>
+      <div style="font-size:20px;font-weight:800;margin-bottom:4px">${window.CURRENT_USER?.nombre || 'Estudiante'}</div>
       <div style="font-size:13px;color:var(--text2);margin-bottom:8px">16 años · Bachillerato 2do · Grupo A · La Paz, Bolivia</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <span class="badge badge-purple">Semana 3/8</span>
