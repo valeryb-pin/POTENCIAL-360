@@ -290,7 +290,7 @@ function render(){
   renderSidebar();
   renderPage();
 }
-
+console.log("SIDEBAR VERSION 2");
 function renderSidebar(){
   const pages = STATE.role==='student'?PAGES_STUDENT:PAGES_ADMIN;
   const user =
@@ -333,7 +333,8 @@ function renderSidebar(){
       <button class="role-switch" onclick="toggleRole()">
         <i class="ti ti-switch-horizontal" aria-hidden="true"></i> Cambiar a ${STATE.role==='student'?'Admin':'Estudiante'}
       </button>
-      <button class="role-switch" onclick="logout()">
+      <button style="width:100%;margin-top:10px;background:red;color:white"
+        onclick="logout()">
         <i class="ti ti-power" aria-hidden="true"></i> Cerrar Sesión
       </button>
     </div>
@@ -469,7 +470,8 @@ async function verificarSesion() {
 
   } else {
 
-    verificarSesion(); // Llamada recursiva para verificar sesión nuevamente
+    document.getElementById("content")
+      .innerHTML = pageLogin();
 
   }
 
@@ -1099,7 +1101,6 @@ function renderAnalyticsCharts(){
 }
 
 console.log("SCRIPT CARGADO");
-document.getElementById("content")
-  .innerHTML = pageLogin();
+verificarSesion();
 
 </script>
