@@ -375,6 +375,11 @@ async function login(){
       password: password
     });
 
+  const { data: { user } } =
+  await supabaseClient.auth.getUser();
+
+  console.log(user);
+
   if(error){
     alert("Usuario o contraseña incorrectos");
     console.error(error);
