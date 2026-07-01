@@ -216,7 +216,16 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+const SUPABASE_URL = "https://ezjkrvivsirkcinnhrsa.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 const STATE = {
   role: 'student',
   page: 'home',
@@ -351,7 +360,7 @@ function pageLogin(){
   `;
 }
 
-async function login(){
+aasync function login(){
 
   const correo =
     document.getElementById("correo").value;
@@ -359,33 +368,21 @@ async function login(){
   const password =
     document.getElementById("password").value;
 
-  try{
+  const { data, error } =
+    await supabase.auth.signInWithPassword({
+      email: correo,
+      password: password
+    });
 
-    const resp = await fetch(
-      "https://script.google.com/macros/s/AKfycbyD5AmpWXEyIj2Q03YgsRFaVlaMvXAB6i48XfYzLcAPluD4VS36qCFnSCVZA/exec",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-          correo: correo,
-          password: password
-        })
-      }
-    );
-
-    const data = await resp.json();
-
-    alert(data.mensaje);
-
-  }catch(error){
-
+  if(error){
+    alert("Usuario o contraseña incorrectos");
     console.error(error);
-
-    alert("Error conectando con Apps Script");
-
+    return;
   }
+
+  alert("Bienvenida " + correo);
+
+  render();
 
 }
 function renderPage(){
