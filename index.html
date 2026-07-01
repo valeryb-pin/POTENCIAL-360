@@ -397,6 +397,8 @@ async function login(){
   }
 
   const perfil = await cargarPerfil();
+  console.log("PERFIL EN LOGIN:", perfil);
+  
   if(!perfil){
   alert("No se encontró el perfil");
   return;
@@ -408,7 +410,7 @@ async function login(){
     colegio: perfil.colegio
   };
 
-  console.log(window.CURRENT_USER);
+  console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
 
   render();
 
