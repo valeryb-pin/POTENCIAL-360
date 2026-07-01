@@ -451,10 +451,10 @@ async function logout() {
 }
 
 async function verificarSesion() {
-
+  console.log("VERIFICANDO SESION");
   const { data: { session } } =
     await supabaseClient.auth.getSession();
-
+  console.log("SESSION:", session);
   if(session){
 
     const perfil = await cargarPerfil();
