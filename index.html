@@ -396,23 +396,11 @@ async function login(){
     return;
   }
 
-const perfil = await cargarPerfil();
-
-console.log(perfil);
-
-window.CURRENT_USER = {
-  nombre: perfil.nombre_completo,
-  email: perfil.correo,
-  rol: perfil.rol,
-  colegio: perfil.colegio,
-  curso: perfil.curso
-};
-
   const perfil = await cargarPerfil();
 
   window.CURRENT_USER = {
-    nombre: perfil.nombre,
-    email: perfil.email,
+    nombre: perfil.nombre_completo,
+    email: perfil.correo,
     rol: perfil.rol,
     colegio: perfil.colegio
   };
