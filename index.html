@@ -222,11 +222,10 @@
   href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
 />
 <script>
-  const testClient = supabase.createClient(
+  const supabaseClient = supabase.createClient(
   "https://ezjkrvivsirkcinnhrsa.supabase.co",
-  "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn"
+  "TU_PUBLISHABLE_KEY_COMPLETA"
 );
-
 testClient
 const STATE = {
   role: 'student',
@@ -371,7 +370,7 @@ async function login(){
     document.getElementById("password").value;
 
   const { data, error } =
-    await supabase.auth.signInWithPassword({
+    await supabaseClient.auth.signInWithPassword({
       email: correo,
       password: password
     });
