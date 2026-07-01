@@ -227,6 +227,7 @@
   "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn"
 );
 
+let CURRENT_USER = null;
 const STATE = {
   role: 'student',
   page: 'home',
@@ -291,7 +292,20 @@ function render(){
 
 function renderSidebar(){
   const pages = STATE.role==='student'?PAGES_STUDENT:PAGES_ADMIN;
-  const user = STATE.role==='student'?{name:'Valentina Torres',sub:'Semana 3 · Grupo A',initials:'VT'}:{name:'Prof. Ana López',sub:'Facilitadora',initials:'AL'};
+  const user =
+  CURRENT_USER
+  ? {
+      name: CURRENT_USER.nombre,
+      sub: CURRENT_USER.email,
+      initials: CURRENT_USER.nombre
+        .substring(0,2)
+        .toUpperCase()
+    }
+  : {
+      name:'Invitado',
+      sub:'',
+      initials:'--'
+    };
   const roleLabel = STATE.role==='student'?'Estudiante':'Administrador';
   const roleClass = STATE.role==='student'?'role-student':'role-admin';
 
@@ -380,6 +394,11 @@ async function login(){
 
   console.log(user);
 
+  CURRENT_USER = {
+  email: user.email,
+  nombre: user.email
+  };
+
   if(error){
     alert("Usuario o contraseña incorrectos");
     console.error(error);
@@ -391,6 +410,24 @@ async function login(){
   render();
 
 }
+async function cargarPerfil() {
+
+  const { data: { user } } =
+    await supabaseClient.auth.getUser();
+
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("email", user.email)
+      .single();
+
+  console.log(data);
+
+  return data;
+}
+
+
 function renderPage(){
   const c=document.getElementById('content');
   c.className='content page';
