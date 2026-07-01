@@ -219,7 +219,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://ezjkrvivsirkcinnhrsa.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://ezjkrvivsirkcinnhrsa.supabase.co";
 const SUPABASE_KEY = "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn";
 
 const supabase = window.supabase.createClient(
@@ -360,7 +360,7 @@ function pageLogin(){
   `;
 }
 
-aasync function login(){
+async function login(){
 
   const correo =
     document.getElementById("correo").value;
