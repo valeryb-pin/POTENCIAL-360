@@ -418,21 +418,19 @@ async function cargarPerfil() {
 
   const { data: { user } } =
     await supabaseClient.auth.getUser();
-
+  
+  console.log("EMAIL LOGIN:", user.email);
   const { data, error } =
     await supabaseClient
       .from("estudiantes")
       .select("*")
       .eq("correo", user.email)
       .single();
-
-   if(error){
-    console.error(error);
-    return null;
+  console.log("RESULTADO:", data);
+  console.log("ERROR:", error);
+  
+    return data?.[0] || null;
   }
-
-  return data;
-}
 
 
 function renderPage(){
