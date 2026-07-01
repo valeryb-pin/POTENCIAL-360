@@ -227,7 +227,8 @@
   "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn"
 );
 
-let CURRENT_USER = null;
+window.CURRENT_USER = null;
+
 const STATE = {
   role: 'student',
   page: 'home',
@@ -293,11 +294,11 @@ function render(){
 function renderSidebar(){
   const pages = STATE.role==='student'?PAGES_STUDENT:PAGES_ADMIN;
   const user =
-  CURRENT_USER
+  window.CURRENT_USER
   ? {
-      name: CURRENT_USER.nombre,
-      sub: CURRENT_USER.email,
-      initials: CURRENT_USER.nombre
+      name: window.CURRENT_USER.nombre,
+      sub: window.CURRENT_USER.email,
+      initials: window.CURRENT_USER.nombre
         .substring(0,2)
         .toUpperCase()
     }
@@ -394,7 +395,7 @@ async function login(){
 
   console.log(user);
 
-  CURRENT_USER = {
+  window.CURRENT_USER = {
   email: user.email,
   nombre: user.email
   };
