@@ -333,6 +333,9 @@ function renderSidebar(){
       <button class="role-switch" onclick="toggleRole()">
         <i class="ti ti-switch-horizontal" aria-hidden="true"></i> Cambiar a ${STATE.role==='student'?'Admin':'Estudiante'}
       </button>
+      <button class="role-switch" onclick="logout()">
+        <i class="ti ti-power" aria-hidden="true"></i> Cerrar Sesión
+      </button>
     </div>
   `;
 }
@@ -436,7 +439,41 @@ async function cargarPerfil() {
   return data;
 }
 
+async function logout() {
 
+  await supabaseClient.auth.signOut();
+
+  window.CURRENT_USER = null;
+
+  location.reload();
+
+}
+
+async function verificarSesion() {
+
+  const { data: { session } } =
+    await supabaseClient.auth.getSession();
+
+  if(session){
+
+    const perfil = await cargarPerfil();
+
+    window.CURRENT_USER = {
+      nombre: perfil.nombre_completo,
+      email: perfil.correo,
+      rol: perfil.rol,
+      colegio: perfil.colegio
+    };
+
+    render();
+
+  } else {
+
+    verificarSesion(); // Llamada recursiva para verificar sesión nuevamente
+
+  }
+
+}
 function renderPage(){
   const c=document.getElementById('content');
   c.className='content page';
