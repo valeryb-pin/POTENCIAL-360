@@ -418,7 +418,7 @@ async function cargarPerfil() {
 
   const { data, error } =
     await supabaseClient
-      .from("Estudiantes")
+      .from("estudiantes")
       .select("*")
       .eq("correo", user.email)
       .single();
