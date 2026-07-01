@@ -397,7 +397,10 @@ async function login(){
   }
 
   const perfil = await cargarPerfil();
-
+  if(!perfil){
+  alert("No se encontró el perfil");
+  return;
+}
   window.CURRENT_USER = {
     nombre: perfil.nombre_completo,
     email: perfil.correo,
