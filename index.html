@@ -377,14 +377,7 @@ function pageLogin(){
 }
 
 async function login(){
-  const perfil = await cargarPerfil();
 
-  window.CURRENT_USER = {
-    nombre: perfil.nombre,
-    email: perfil.email,
-    rol: perfil.rol,
-    colegio: perfil.colegio
-  };
   const correo =
     document.getElementById("correo").value;
 
@@ -397,27 +390,39 @@ async function login(){
       password: password
     });
 
-  const { data: { user } } =
-  await supabaseClient.auth.getUser();
-
-  console.log(user);
-
-  window.CURRENT_USER = {
-  email: user.email,
-  nombre: user.email
-  };
-
   if(error){
     alert("Usuario o contraseña incorrectos");
     console.error(error);
     return;
   }
 
-  alert("Bienvenida " + correo);
+const perfil = await cargarPerfil();
+
+console.log(perfil);
+
+window.CURRENT_USER = {
+  nombre: perfil.nombre_completo,
+  email: perfil.correo,
+  rol: perfil.rol,
+  colegio: perfil.colegio,
+  curso: perfil.curso
+};
+
+  const perfil = await cargarPerfil();
+
+  window.CURRENT_USER = {
+    nombre: perfil.nombre,
+    email: perfil.email,
+    rol: perfil.rol,
+    colegio: perfil.colegio
+  };
+
+  console.log(window.CURRENT_USER);
 
   render();
 
 }
+
 async function cargarPerfil() {
 
   const { data: { user } } =
@@ -425,12 +430,15 @@ async function cargarPerfil() {
 
   const { data, error } =
     await supabaseClient
-      .from("profiles")
+      .from("Estudiantes")
       .select("*")
-      .eq("email", user.email)
+      .eq("correo", user.email)
       .single();
 
-  console.log(data);
+   if(error){
+    console.error(error);
+    return null;
+  }
 
   return data;
 }
