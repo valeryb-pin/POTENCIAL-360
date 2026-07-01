@@ -133,7 +133,7 @@
   .badge-blue{background:#DBEAFE;color:#1E40AF}
   .badge-purple{background:var(--v3);color:var(--v)}
 
-  /* SECTION HEADERS */
+  /* SECTION scrptERS */
   .section-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
   .section-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
 
@@ -217,7 +217,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+/>
 <script>
 const SUPABASE_URL = "https://ezjkrvivsirkcinnhrsa.supabase.co";
 const SUPABASE_KEY = "sb_publishable_khNUj1A8vUDra8RbPnLEPQ_fDrpeecn";
@@ -1009,6 +1012,8 @@ function renderAnalyticsCharts(){
   }
 }
 
+console.log("SCRIPT CARGADO");
 document.getElementById("content")
   .innerHTML = pageLogin();
+
 </script>
