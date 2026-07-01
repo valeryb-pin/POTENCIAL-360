@@ -377,7 +377,14 @@ function pageLogin(){
 }
 
 async function login(){
+  const perfil = await cargarPerfil();
 
+  window.CURRENT_USER = {
+    nombre: perfil.nombre,
+    email: perfil.email,
+    rol: perfil.rol,
+    colegio: perfil.colegio
+  };
   const correo =
     document.getElementById("correo").value;
 
