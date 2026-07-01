@@ -333,9 +333,9 @@ function renderSidebar(){
       <button class="role-switch" onclick="toggleRole()">
         <i class="ti ti-switch-horizontal" aria-hidden="true"></i> Cambiar a ${STATE.role==='student'?'Admin':'Estudiante'}
       </button>
-      <button style="width:100%;margin-top:10px;background:red;color:white"
-        onclick="logout()">
-        <i class="ti ti-power" aria-hidden="true"></i> Cerrar Sesión
+      <button class="logout-btn" onclick="logout()">
+      <i class="ti ti-logout"></i>
+        Cerrar sesión
       </button>
     </div>
   `;
