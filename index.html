@@ -249,12 +249,7 @@ const STATE = {
   role: 'student',
   page: 'home',
   charts: {},
-  goals: [
-    {id:1,title:'Completar mi perfil de fortalezas',cat:'Personal',priority:'Alta',due:'2025-07-30',progress:75,status:'En progreso',icon:'🌟'},
-    {id:2,title:'Investigar 3 carreras de interés',cat:'Carrera',priority:'Alta',due:'2025-08-15',progress:40,status:'En progreso',icon:'🔭'},
-    {id:3,title:'Leer 2 libros de desarrollo personal',cat:'Habilidades',priority:'Media',due:'2025-08-30',progress:50,status:'En progreso',icon:'📚'},
-    {id:4,title:'Mejorar promedio académico a 8.5',cat:'Académico',priority:'Alta',due:'2025-12-01',progress:20,status:'En progreso',icon:'📊'},
-  ],
+  goals: [],
   reflections:[
     {id:1,date:'2025-07-10',mood:'🔥 Motivado',energy:8,motivation:9,learning:'Descubrí que mi mayor fortaleza es la curiosidad intelectual.',challenges:'Me cuesta tomar decisiones rápidas bajo presión.',insights:'Puedo desarrollar mis habilidades de liderazgo si practico más la comunicación.',actions:'Hablar con al menos 2 personas sobre sus trayectorias profesionales.'},
     {id:2,date:'2025-07-03',mood:'😊 Tranquilo',energy:6,motivation:7,learning:'Comprendí la diferencia entre mis valores personales y los valores sociales.',challenges:'Identificar cuáles son mis verdaderos valores vs los que me impusieron.',insights:'Debo hacer el ejercicio de los valores en silencio, sin apresuramiento.',actions:'Escribir mi lista de valores y llevarla al próximo taller.'},
@@ -295,6 +290,7 @@ const PAGES_ADMIN = [
   {id:'admin-assessments',icon:'ti-clipboard-check',label:'Evaluaciones'},
   {id:'admin-analytics',icon:'ti-chart-bar',label:'Analítica'},
 ];
+
 
 function destroyCharts(){
   Object.values(STATE.charts).forEach(c=>{try{c.destroy()}catch(e){}});
@@ -429,6 +425,8 @@ async function login(){
     colegio: perfil.colegio,
     id: perfil.id
   };
+  STATE.goals = await cargarMetas();
+  STATE.reflexions = await cargarReflexiones();
   alert("ASIGNO CURRENT_USER");
   console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
 
@@ -457,6 +455,54 @@ async function cargarPerfil() {
   return data;
 }
 
+async function cargarMetas() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("metas")
+      .select("*")
+      .eq("estudiante_id", window.CURRENT_USER.id);
+
+  if(error){
+    console.error(error);
+    return [];
+  }
+  return data.map(m => ({
+   id: m.id,
+   title: m.titulo,
+   priority: m.prioridad,
+   progress: m.progreso,
+   status: m.estado,
+   due: m.fecha_limite,
+   cat: m.categoria
+  }));
+}
+
+async function cargarReflexiones() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("reflexiones")
+      .select("*")
+      .eq("estudiante_id", window.CURRENT_USER.id);
+
+  if(error){
+    console.error(error);
+    return [];
+  }
+  return data.map(r => ({
+   id: r.id,
+   date: r.fecha,
+   mood: r.estado_animo,
+   energy: r.nivel_energia,
+   motivation: r.nivel_motivacion,
+   learning: r.aprendizaje_semanal,
+   challenges: r.desafios,
+   insights: r.descubrimiento_personal,
+   actions: r.proximas_acciones
+  }));
+}
+
 async function logout() {
 
   await supabaseClient.auth.signOut();
@@ -482,7 +528,8 @@ async function verificarSesion() {
       rol: perfil.rol,
       colegio: perfil.colegio
     };
-
+    STATE.reflexions= await cargarReflexiones();
+    STATE.metas = await cargarMetas();
     render();
 
   } else {
