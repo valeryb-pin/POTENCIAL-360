@@ -327,7 +327,7 @@ function renderSidebar(){
       initials:'--'
     };
   const roleLabel =  window.CURRENT_USER?.rol || 'Invitado';
-  const roleClass =  window.CURRENT_USER?.rol==='student'?'role-student':'role-admin';
+  const roleClass =  window.CURRENT_USER?.rol==='estudiante'?'role-student':'role-admin';
 
   document.getElementById('sidebar').innerHTML=`
     <div class="sidebar-logo">
