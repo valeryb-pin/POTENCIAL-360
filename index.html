@@ -308,7 +308,10 @@ function render(){
 }
 console.log("SIDEBAR VERSION 2");
 function renderSidebar(){
-  const pages = STATE.role==='student'?PAGES_STUDENT:PAGES_ADMIN;
+  const pages =
+  window.CURRENT_USER?.rol === 'estudiante'
+    ? PAGES_STUDENT
+    : PAGES_ADMIN;
   const user =
   window.CURRENT_USER
   ? {
@@ -323,8 +326,8 @@ function renderSidebar(){
       sub:'',
       initials:'--'
     };
-  const roleLabel = STATE.role==='student'?'Estudiante':'Administrador';
-  const roleClass = STATE.role==='student'?'role-student':'role-admin';
+  const roleLabel =  window.CURRENT_USER?.rol || 'Invitado';
+  const roleClass =  window.CURRENT_USER?.rol==='student'?'role-student':'role-admin';
 
   document.getElementById('sidebar').innerHTML=`
     <div class="sidebar-logo">
@@ -345,10 +348,7 @@ function renderSidebar(){
       <div class="user-mini">
         <div class="avatar-sm">${user.initials}</div>
         <div class="user-info-sm"><strong>${user.name}</strong><span>${user.sub}</span></div>
-      </div>
-      <button class="role-switch" onclick="toggleRole()">
-        <i class="ti ti-switch-horizontal" aria-hidden="true"></i> Cambiar a ${STATE.role==='student'?'Admin':'Estudiante'}
-      </button>
+        </div>
       <button class="logout-btn" onclick="logout()">
       <i class="ti ti-logout"></i>
         Cerrar sesión
