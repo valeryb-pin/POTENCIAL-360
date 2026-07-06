@@ -445,14 +445,12 @@ async function cargarPerfil() {
     await supabaseClient
       .from("estudiantes")
       .select("*")
-      .eq("correo", user.email)
-      .single();
+      .eq("correo", user.email);
 
-  console.log("RESULTADO:", data);
+  console.log("DATA:", data);
   console.log("ERROR:", error);
-  console.log("ANTES DEL RETURN:", data);
 
-  return data;
+  return data?.[0] || null;
 }
 
 async function cargarPerfilPsicologico() {
