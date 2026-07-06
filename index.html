@@ -455,6 +455,23 @@ async function cargarPerfil() {
   return data;
 }
 
+async function cargarPerfilPsicologico() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("perfiles")
+      .select("*")
+      .eq("estudiante_id", window.CURRENT_USER.id)
+      .single();
+
+  if(error){
+    console.error(error);
+    return null;
+  }
+
+  return data;
+}
+
 async function cargarMetas() {
 
   const { data, error } =
@@ -521,6 +538,13 @@ async function verificarSesion() {
   if(session){
 
     const perfil = await cargarPerfil();
+      if(!perfil){
+        console.error(
+          "No se encontró perfil para:",
+          session.user.email
+        );
+       return;
+      }
 
     window.CURRENT_USER = {
       nombre: perfil.nombre_completo,
