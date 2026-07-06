@@ -439,20 +439,18 @@ async function cargarPerfil() {
   const { data: { user } } =
     await supabaseClient.auth.getUser();
 
-  console.log("EMAIL LOGIN:", user.email);
+  console.log("USER:", user);
 
   const { data, error } =
     await supabaseClient
       .from("estudiantes")
-      .select("*")
-      .eq("correo", user.email);
+      .select("*");
 
-  console.log("DATA:", data);
+  console.log("TODOS:", data);
   console.log("ERROR:", error);
 
   return data?.[0] || null;
 }
-
 async function cargarPerfilPsicologico() {
 
   const { data, error } =
