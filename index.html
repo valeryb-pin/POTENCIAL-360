@@ -462,12 +462,11 @@ if(errorInsert){
   };
   STATE.goals = await cargarMetas();
   STATE.reflexions = await cargarReflexiones();
+  alert("ASIGNO CURRENT_USER");
+  console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
   STATE.perfil = await cargarPerfilPsicologico();
 
   console.log("PERFIL PSICOLÓGICO:", STATE.perfil);
-  alert("ASIGNO CURRENT_USER");
-  console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
-
   render();
 
 }
