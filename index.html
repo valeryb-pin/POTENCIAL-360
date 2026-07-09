@@ -1071,7 +1071,7 @@ function pageProgress(){
         <div style="margin-bottom:12px">
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
             <span style="font-size:12px;font-weight:600">${d.label}</span>
-            <span style="font-size:12px;font-weight:700;color:${d.color}">+${d.evaluado ? `${d.after >= d.before ? '+' : ''}${d.after - d.before} pts` : "Pendiente"} pts</span>
+            <span style="font-size:12px;font-weight:700;color:${d.color}">${d.evaluado? `${d.after > d.before ? '+' : ''}${d.after - d.before} pts`: 'Pendiente'}</span>
           </div>
           <div style="display:flex;align-items:center;gap:6px">
             <div style="flex:1;height:5px;background:#E5E7EB;border-radius:10px;overflow:hidden">
