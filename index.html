@@ -392,6 +392,36 @@ function pageLogin(){
   `;
 }
 
+function pageRegistro(){
+
+   return `
+
+      <div class="card">
+
+         <h2>Crear Cuenta</h2>
+
+         <input id="nombre">
+
+         <input id="correo">
+
+         <input id="password">
+
+         <input id="curso">
+
+         <input id="colegio">
+
+         <button onclick="registrarEstudiante()">
+
+             Registrarme
+
+         </button>
+
+      </div>
+
+   `;
+
+}
+
 async function login(){
 
   const correo =
@@ -412,6 +442,11 @@ async function login(){
     return;
   }
 
+if(errorInsert){
+
+   console.error(errorInsert);
+
+}
   const perfil = await cargarPerfil();
   console.log("PERFIL EN LOGIN:", perfil);
   
@@ -434,22 +469,85 @@ async function login(){
 
 }
 
+async function registrarEstudiante(){
+
+  const nombre =
+    document.getElementById("nombre").value;
+
+  const email =
+    document.getElementById("correo").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  const curso =
+    document.getElementById("curso").value;
+
+  const colegio =
+    document.getElementById("colegio").value;
+
+  const { data, error } =
+
+   await supabaseClient.auth.signUp({
+
+      email,
+
+      password
+
+    });
+  
+  if(error){
+
+   alert(error.message);
+
+   return;
+
+  }
+
+  const { error: insertError } =
+
+  await supabaseClient
+
+    .from("estudiantes")
+
+    .insert({
+
+        nombre_completo:nombre,
+
+        correo:email,
+
+        curso:curso,
+
+        colegio:colegio,
+
+        rol:"estudiante"
+
+    });
+
+  }
+
 async function cargarPerfil() {
 
   const { data: { user } } =
     await supabaseClient.auth.getUser();
 
-  console.log("USER:", user);
-
   const { data, error } =
     await supabaseClient
       .from("estudiantes")
-      .select("*");
+      .select("*")
+      .eq("correo", user.email)
+      .single();
 
-  console.log("TODOS:", data);
-  console.log("ERROR:", error);
+  if(error){
 
-  return data?.[0] || null;
+      console.error(error);
+
+      return null;
+
+  }
+
+  return data;
+
 }
 async function cargarPerfilPsicologico() {
 
@@ -550,6 +648,10 @@ async function verificarSesion() {
     };
     STATE.reflexions= await cargarReflexiones();
     STATE.metas = await cargarMetas();
+
+    STATE.perfil = await cargarPerfilPsicologico();
+
+    console.log("PERFIL:", STATE.perfil);
     render();
 
   } else {
