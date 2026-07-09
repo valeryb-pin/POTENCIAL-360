@@ -442,16 +442,13 @@ async function login(){
     return;
   }
 
-if(errorInsert){
-
-   console.error(errorInsert);
-
-}
   const perfil = await cargarPerfil();
-  console.log("PERFIL EN LOGIN:", perfil);
   
-  alert("LLEGO A PERFIL");
-  console.log("PERFIL EN LOGIN:", perfil);
+  if(!perfil){
+    alert("No existe un perfil para este usuario.");
+    return;
+  }
+
     
   window.CURRENT_USER = {
     nombre: perfil.nombre_completo,
@@ -460,12 +457,12 @@ if(errorInsert){
     colegio: perfil.colegio,
     id: perfil.id
   };
+  
   STATE.goals = await cargarMetas();
   STATE.reflexions = await cargarReflexiones();
-  alert("ASIGNO CURRENT_USER");
-  console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
   STATE.perfil = await cargarPerfilPsicologico();
 
+  console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
   console.log("PERFIL PSICOLÓGICO:", STATE.perfil);
   render();
 
