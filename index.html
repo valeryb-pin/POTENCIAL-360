@@ -1005,45 +1005,45 @@ function obtenerAntesAhora(){
     return [
 
         {
-            nombre:"Autoconciencia",
-            before:35,
-            after:p.ccs_autoconocimiento ?? 0,
-            color:"#6C3FC8"
+            label: "Autoconciencia",
+            before: 35,
+            after: p.ccs_autoconocimiento ?? 0,
+            color: "#6C3FC8"
         },
 
         {
-            nombre:"Confianza",
-            before:42,
-            after:p.autoeficacia ?? 0,
-            color:"#FF6B6B"
+            label: "Confianza",
+            before: 42,
+            after: p.autoeficacia ?? null,
+            color: "#FF6B6B"
         },
 
         {
-            nombre:"Motivación",
-            before:55,
-            after:p.mindset_crecimiento ?? 0,
-            color:"#F59E0B"
+            label: "Motivación",
+            before: 55,
+            after: p.mindset_crecimiento ?? null,
+            color: "#F59E0B"
         },
 
         {
-            nombre:"Decisiones",
-            before:30,
-            after:p.claridad_carrera ?? 0,
-            color:"#4ECDC4"
+            label: "Decisiones",
+            before: 30,
+            after: p.claridad_carrera ?? 0,
+            color: "#4ECDC4"
         },
 
         {
-            nombre:"Planificación",
-            before:25,
-            after:p.ccs_planificacion ?? 0,
-            color:"#EC4899"
+            label: "Planificación",
+            before: 25,
+            after: p.ccs_planificacion ?? 0,
+            color: "#EC4899"
         },
 
         {
-            nombre:"Claridad de vida",
-            before:20,
-            after:p.claridad_carrera ?? 0,
-            color:"#10B981"
+            label: "Claridad de vida",
+            before: 20,
+            after: p.claridad_carrera ?? 0,
+            color: "#10B981"
         }
 
     ];
@@ -1071,7 +1071,7 @@ function pageProgress(){
         <div style="margin-bottom:12px">
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
             <span style="font-size:12px;font-weight:600">${d.label}</span>
-            <span style="font-size:12px;font-weight:700;color:${d.color}">+${d.after >= d.before ? '+' : ''}${d.after - d.before} pts</span>
+            <span style="font-size:12px;font-weight:700;color:${d.color}">+${d.evaluado ? `${d.after >= d.before ? '+' : ''}${d.after - d.before} pts` : "Pendiente"} pts</span>
           </div>
           <div style="display:flex;align-items:center;gap:6px">
             <div style="flex:1;height:5px;background:#E5E7EB;border-radius:10px;overflow:hidden">
