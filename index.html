@@ -1050,10 +1050,10 @@ function obtenerAntesAhora(){
 
 }
 function pageProgress(){
- const dims = obtenerAntesAhora().map(d => ({
-  ...d,
-  evaluado: d.after !== null && d.after !== undefined,
-  after: d.after ?? 0
+ const dims = obtenerDimensiones().map(d => ({
+    ...d,
+    evaluado: d.after !== null && d.after !== undefined,
+    after: d.after ?? 0
 }));
 
   return `
@@ -1108,101 +1108,70 @@ function pageProgress(){
 
 function obtenerRadar(){
 
-    const p = STATE.perfil || {};
+    const dimensiones = obtenerDimensiones();
 
     return {
 
-        labels: [
+        labels: dimensiones.map(d => d.titulo),
 
-            "Autoconciencia",
-            "Confianza",
-            "Motivación",
-            "Decisiones",
-            "Planificación",
-            "Claridad"
+        inicio: dimensiones.map(d => d.before),
 
-        ],
-
-        inicio: [
-
-            35,
-            42,
-            55,
-            30,
-            25,
-            20
-
-        ],
-
-        ahora: [
-
-            p.ccs_autoconocimiento ?? 0,
-
-            p.autoeficacia ?? 0,
-
-            p.mindset_crecimiento ?? 0,
-
-            p.claridad_carrera ?? 0,
-
-            p.ccs_planificacion ?? 0,
-
-            p.claridad_carrera ?? 0
-
-        ]
+        ahora: dimensiones.map(d => d.after ?? 0)
 
     };
 
 }
 
-function obtenerIndicadores(){
+function obtenerDimensiones(){
 
     const p = STATE.perfil || {};
 
     return [
 
-        {
 
+        {
+            key:"autoconciencia",
             titulo:"Autoconciencia",
 
-            antes:35,
+            before:35,
 
-            ahora:p.ccs_autoconocimiento ?? 0,
+            after:p.ccs_autoconocimiento ?? 0,
 
             color:"#6C3FC8"
 
         },
 
         {
-
+            key:"confianza",
             titulo:"Confianza",
 
-            antes:42,
+            before:42,
 
-            ahora:p.autoeficacia ?? 0,
+            after:p.autoeficacia ?? 0,
 
             color:"#FF6B6B"
 
         },
 
         {
-
+            key:"motivacion",
             titulo:"Motivación",
 
-            antes:55,
+            before:55,
 
-            ahora:p.mindset_crecimiento ?? 0,
+            after:p.mindset_crecimiento ?? 0,
 
             color:"#F59E0B"
 
         },
 
         {
-
+            key:"decisiones",
             titulo:"Decisiones",
 
-            antes:30,
+            before  :30,
 
-            ahora:p.claridad_carrera ?? 0,
+            after:p.claridad_carrera ?? 0,
 
             color:"#4ECDC4"
 
@@ -1210,23 +1179,24 @@ function obtenerIndicadores(){
 
         {
 
+            key:"planificacion",
             titulo:"Planificación",
 
-            antes:25,
+            before:25,
 
-            ahora:p.ccs_planificacion ?? 0,
+            after:p.ccs_planificacion ?? 0,
 
             color:"#EC4899"
 
         },
 
         {
-
+            key:"claridad",
             titulo:"Claridad",
 
-            antes:20,
+            before:20,
 
-            ahora:p.claridad_carrera ?? 0,
+            after:p.claridad_carrera ?? 0,
 
             color:"#10B981"
 
