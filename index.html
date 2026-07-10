@@ -1049,78 +1049,6 @@ function obtenerAntesAhora(){
     ];
 
 }
-function pageProgress(){
- const dims = obtenerDimensiones().map(d => ({
-    ...d,
-    evaluado: d.after !== null && d.after !== undefined,
-    after: d.after ?? 0
-}));
-
-  return `
-  <div class="section-title">📈 Mi Crecimiento</div>
-  <div class="section-sub">Comparación antes y después del programa</div>
-
-  <div class="grid-2" style="margin-bottom:20px">
-    <div class="card">
-      <div class="section-title" style="margin-bottom:16px;font-size:14px">Radar de Crecimiento Personal</div>
-      <canvas id="radarChart" role="img" aria-label="Radar de crecimiento personal mostrando 6 dimensiones">Radar de crecimiento en 6 dimensiones de desarrollo personal.</canvas>
-    </div>
-    <div class="card">
-      <div class="section-title" style="margin-bottom:16px;font-size:14px">Antes vs Ahora</div>
-      ${dims.map(d=>`
-        <div style="margin-bottom:12px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;font-weight:600">${d.label}</span>
-            <span style="font-size:12px;font-weight:700;color:${d.color}">${d.evaluado? `${d.after > d.before ? '+' : ''}${d.after - d.before} pts`: 'Pendiente'}</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px">
-            <div style="flex:1;height:5px;background:#E5E7EB;border-radius:10px;overflow:hidden">
-              <div style="width:${d.before}%;height:100%;background:#D1D5DB;border-radius:10px"></div>
-            </div>
-            <span style="font-size:10px;color:var(--text3);width:24px;text-align:right">${d.before}</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
-            <div style="flex:1;height:5px;background:${d.color}22;border-radius:10px;overflow:hidden">
-              <div style="width:${d.evaluado ? d.after : "Pendiente"}%;height:100%;background:${d.color};border-radius:10px"></div>
-            </div>
-            <span style="font-size:10px;font-weight:700;color:${d.color};width:24px;text-align:right">${d.evaluado ? d.after : "Pendiente"}</span>
-          </div>
-        </div>
-      `).join('')}
-      <div style="display:flex;gap:12px;margin-top:8px">
-        <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)"><span style="width:12px;height:4px;background:#D1D5DB;border-radius:2px;display:inline-block"></span>Antes</span>
-        <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)"><span style="width:12px;height:4px;background:var(--v);border-radius:2px;display:inline-block"></span>Ahora</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title" style="margin-bottom:16px;font-size:14px">Progreso de Metas por Categoría</div>
-    <div class="chart-wrap"><canvas id="goalsChart" role="img" aria-label="Gráfico de barras de progreso de metas por categoría">Progreso de metas por categoría.</canvas></div>
-  </div>
-  `;
-}
-/******************************************************************
- *
- * OBTENER DATOS DEL RADAR
- *
- ******************************************************************/
-
-function obtenerRadar(){
-
-    const dimensiones = obtenerDimensiones();
-
-    return {
-
-        labels: dimensiones.map(d => d.titulo),
-
-        inicio: dimensiones.map(d => d.before),
-
-        ahora: dimensiones.map(d => d.after ?? 0)
-
-    };
-
-}
 
 function obtenerDimensiones(){
 
@@ -1203,6 +1131,80 @@ function obtenerDimensiones(){
         }
 
     ];
+
+}
+
+
+function pageProgress(){
+ const dims = obtenerDimensiones().map(d => ({
+    ...d,
+    evaluado: d.after !== null && d.after !== undefined,
+    after: d.after ?? 0
+}));
+
+  return `
+  <div class="section-title">📈 Mi Crecimiento</div>
+  <div class="section-sub">Comparación antes y después del programa</div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:16px;font-size:14px">Radar de Crecimiento Personal</div>
+      <canvas id="radarChart" role="img" aria-label="Radar de crecimiento personal mostrando 6 dimensiones">Radar de crecimiento en 6 dimensiones de desarrollo personal.</canvas>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-bottom:16px;font-size:14px">Antes vs Ahora</div>
+      ${dims.map(d=>`
+        <div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;font-weight:600">${d.label}</span>
+            <span style="font-size:12px;font-weight:700;color:${d.color}">${d.evaluado? `${d.after > d.before ? '+' : ''}${d.after - d.before} pts`: 'Pendiente'}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="flex:1;height:5px;background:#E5E7EB;border-radius:10px;overflow:hidden">
+              <div style="width:${d.before}%;height:100%;background:#D1D5DB;border-radius:10px"></div>
+            </div>
+            <span style="font-size:10px;color:var(--text3);width:24px;text-align:right">${d.before}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+            <div style="flex:1;height:5px;background:${d.color}22;border-radius:10px;overflow:hidden">
+              <div style="width:${d.evaluado ? d.after : "Pendiente"}%;height:100%;background:${d.color};border-radius:10px"></div>
+            </div>
+            <span style="font-size:10px;font-weight:700;color:${d.color};width:24px;text-align:right">${d.evaluado ? d.after : "Pendiente"}</span>
+          </div>
+        </div>
+      `).join('')}
+      <div style="display:flex;gap:12px;margin-top:8px">
+        <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)"><span style="width:12px;height:4px;background:#D1D5DB;border-radius:2px;display:inline-block"></span>Antes</span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)"><span style="width:12px;height:4px;background:var(--v);border-radius:2px;display:inline-block"></span>Ahora</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="margin-bottom:16px;font-size:14px">Progreso de Metas por Categoría</div>
+    <div class="chart-wrap"><canvas id="goalsChart" role="img" aria-label="Gráfico de barras de progreso de metas por categoría">Progreso de metas por categoría.</canvas></div>
+  </div>
+  `;
+}
+/******************************************************************
+ *
+ * OBTENER DATOS DEL RADAR
+ *
+ ******************************************************************/
+
+function obtenerRadar(){
+
+    const dimensiones = obtenerDimensiones();
+
+    return {
+
+        labels: dimensiones.map(d => d.label),
+
+        inicio: dimensiones.map(d => d.before),
+
+        ahora: dimensiones.map(d => d.after ?? 0)
+
+    };
 
 }
 
