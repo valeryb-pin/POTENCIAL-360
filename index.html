@@ -462,6 +462,11 @@ async function login(){
   STATE.reflexions = await cargarReflexiones();
   STATE.perfil = await cargarPerfilPsicologico();
 
+  STATE.historicoCCS =
+    await cargarHistoricoCCS();
+
+  console.log("HISTORICO CCS", STATE.historicoCCS);
+
   console.log("CURRENT_USER DESPUES:", window.CURRENT_USER);
   console.log("PERFIL PSICOLÓGICO:", STATE.perfil);
   render();
@@ -648,7 +653,8 @@ async function verificarSesion() {
       nombre: perfil.nombre_completo,
       email: perfil.correo,
       rol: perfil.rol,
-      colegio: perfil.colegio
+      colegio: perfil.colegio,
+      id: perfil.id
     };
     STATE.reflexions= await cargarReflexiones();
     STATE.metas = await cargarMetas();
@@ -683,6 +689,27 @@ function renderPage(){
     default: c.innerHTML=`<div class="empty"><div class="empty-icon">🚧</div><p class="empty-text">Página en construcción</p></div>`;
   }
 }
+
+async function cargarHistoricoCCS(){
+
+    const { data, error } = await supabaseClient
+      .from("resultados_brutos")
+      .select("*")
+      .eq("estudiante_id", window.CURRENT_USER.id)
+      .eq("instrumento", "CCS")
+      .order("fecha_aplicacion", { ascending: true })
+      .limit(1)
+      .single();
+
+    if(error){
+        console.error(error);
+        return null;
+    }
+
+    return data;
+
+}
+
 
 /* ===== STUDENT PAGES ===== */
 
@@ -1011,7 +1038,8 @@ function obtenerAntesAhora(){
 
         {
             label: "Autoconciencia",
-            before: 35,
+            before: STATE.historicoCCS?.dimensiones?.ccs_autoconocimiento
+?? 0,
             after: p.ccs_autoconocimiento ?? 0,
             color: "#6C3FC8"
         },
@@ -1039,14 +1067,14 @@ function obtenerAntesAhora(){
 
         {
             label: "Planificación",
-            before: 25,
+            before: STATE.historicoCCS?.dimensiones?.ccs_planificacion ?? 0,
             after: p.ccs_planificacion ?? 0,
             color: "#EC4899"
         },
 
         {
             label: "Claridad de vida",
-            before: 20,
+            before: STATE.historicoCCS?.dimensiones?.claridad_carrera ?? 0,
             after: p.claridad_carrera ?? 0,
             color: "#10B981"
         }
