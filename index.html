@@ -550,12 +550,17 @@ async function cargarPerfil() {
 }
 async function cargarPerfilPsicologico() {
 
+  console.log("CURRENT_USER:", window.CURRENT_USER);
+
   const { data, error } =
     await supabaseClient
       .from("perfiles")
       .select("*")
       .eq("estudiante_id", window.CURRENT_USER.id)
       .single();
+
+  console.log("DATA PERFIL:", data);
+  console.log("ERROR PERFIL:", error);
 
   if(error){
     console.error(error);
